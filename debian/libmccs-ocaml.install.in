@@ -1,0 +1,6 @@
+@OCamlDllDir@/*.so
+@OCamlStdlibDir@/mccs/META
+@OCamlStdlibDir@/mccs/*.cma
+@OCamlStdlibDir@/mccs/glpk/shared/*.cma
+OPT: @OCamlStdlibDir@/mccs/*.cmxs
+OPT: @OCamlStdlibDir@/mccs/glpk/shared/*.cmxs

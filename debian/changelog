@@ -1,0 +1,39 @@
+ocaml-mccs (1.1+13-1) UNRELEASED; urgency=medium
+
+  * update
+
+ -- Debian OCaml Maintainers <debian-ocaml-maint@lists.debian.org>  Thu, 16 Jun 2022 13:59:06 +0800
+
+ocaml-mccs (1.1+13-1) unstable; urgency=medium
+
+  * Team upload
+  * New upstream release (Closes: #984261)
+  * Bump Standards-Version to 4.6.0
+  * Bump debhelper compat level to 13
+
+ -- Stéphane Glondu <glondu@debian.org>  Mon, 22 Nov 2021 17:20:47 +0100
+
+ocaml-mccs (1.1+11-1) unstable; urgency=medium
+
+  * New upstream release (2019-12-12)
+
+  * debian/watch: Use git mode.
+  * Fix typos in lp_solver.cpp.
+  * Declare compliance with policy v4.5.0.
+    No change required.
+
+ -- Nicolas Braud-Santoni <nicoo@debian.org>  Thu, 30 Jan 2020 23:16:37 +0100
+
+ocaml-mccs (1.1+10-2) unstable; urgency=medium
+
+  * libmcss-ocaml-dev: Only expect mccs/glpk/shared/*.a on OPT architectures.
+    This fixes a build failure on architectures where OCaml doesn't build native
+    code.
+
+ -- Nicolas Braud-Santoni <nicoo@debian.org>  Sat, 17 Aug 2019 21:50:47 +0200
+
+ocaml-mccs (1.1+10-1) unstable; urgency=medium
+
+  * First version in Debian (Closes: #909091)
+
+ -- Nicolas Braud-Santoni <nicoo@debian.org>  Thu, 15 Aug 2019 20:50:34 +0200

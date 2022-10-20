@@ -1,0 +1,60 @@
+Source: ocaml-mccs
+Section: ocaml
+Priority: optional
+Maintainer: Debian OCaml Maintainers <debian-ocaml-maint@lists.debian.org>
+Uploaders: Nicolas Braud-Santoni <nicoo@debian.org>
+Build-Depends:
+ debhelper-compat (= 13),
+ dh-ocaml,
+ ocaml-nox (>= 4.3.0~),
+ ocaml-dune,
+ libcudf-ocaml-dev,
+ libglpk-dev
+Standards-Version: 4.6.0
+Rules-Requires-Root: no
+Homepage: https://github.com/AltGr/ocaml-mccs/
+Vcs-Git: https://salsa.debian.org/ocaml-team/ocaml-mccs.git
+Vcs-Browser: https://salsa.debian.org/ocaml-team/ocaml-mccs
+
+Package: libmccs-ocaml
+Architecture: any
+Depends:
+ ${shlibs:Depends},
+ ${misc:Depends},
+ ${ocaml:Depends},
+Provides:
+ ${ocaml:Provides}
+Description: stripped-down MCCS CUDF solver for OCaml
+ mccs (which stands for Multi Criteria CUDF Solver) is a CUDF problem solver
+ developed at UNS during the European MANCOOSI project.
+ .
+ This repository contains a stripped-down version of the mccs solver, taken from
+ snapshot 1.1, with a binding as an OCaml library, and building with dune.
+ .
+ The binding enables interoperation with binary CUDF data from the OCaml CUDF
+ library, and removes the native C++ parsers and printers from mccs.
+ Only the GLPK backend and the lpsolve interface are compiled
+
+Package: libmccs-ocaml-dev
+Architecture: any
+Depends:
+ ${shlibs:Depends},
+ ${misc:Depends},
+ ${ocaml:Depends},
+ libglpk-dev
+Provides:
+ ${ocaml:Provides}
+Recommends: ocaml-findlib
+Description: stripped-down MCCS CUDF solver for OCaml -- development files
+ mccs (which stands for Multi Criteria CUDF Solver) is a CUDF problem solver
+ developed at UNS during the European MANCOOSI project.
+ .
+ This repository contains a stripped-down version of the mccs solver, taken from
+ snapshot 1.1, with a binding as an OCaml library, and building with dune.
+ .
+ The binding enables interoperation with binary CUDF data from the OCaml CUDF
+ library, and removes the native C++ parsers and printers from mccs.
+ Only the GLPK backend and the lpsolve interface are compiled
+ .
+ This package contains development files, necessary to compile OCaml code that
+ uses the ocaml-mccs library.

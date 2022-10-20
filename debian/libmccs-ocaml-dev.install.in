@@ -1,0 +1,17 @@
+@OCamlStdlibDir@/mccs/*dune*
+@OCamlStdlibDir@/mccs/*opam*
+@OCamlStdlibDir@/mccs/*.ml
+@OCamlStdlibDir@/mccs/*.mli
+@OCamlStdlibDir@/mccs/*.cmi
+@OCamlStdlibDir@/mccs/*.cmt
+@OCamlStdlibDir@/mccs/*.cmti
+@OCamlStdlibDir@/mccs/*.a
+OPT: @OCamlStdlibDir@/mccs/*.cmx
+OPT: @OCamlStdlibDir@/mccs/*.cmxa
+
+@OCamlStdlibDir@/mccs/glpk/shared/*.ml
+@OCamlStdlibDir@/mccs/glpk/shared/*.cmi
+@OCamlStdlibDir@/mccs/glpk/shared/*.cmt
+OPT: @OCamlStdlibDir@/mccs/glpk/shared/*.a
+OPT: @OCamlStdlibDir@/mccs/glpk/shared/*.cmx
+OPT: @OCamlStdlibDir@/mccs/glpk/shared/*.cmxa
