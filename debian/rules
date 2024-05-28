@@ -3,21 +3,13 @@
 
 include /usr/share/ocaml/ocamlvars.mk
 
-DESTDIR=$(CURDIR)/debian/tmp
-
 %:
-	dh $@ --with ocaml
+	dh $@ --with ocaml --buildsystem ocaml_dune
 
-.PHONY: override_dh_auto_build
 override_dh_auto_build:
 	mv src/glpk/dune-shared src/glpk/dune
 	dune build -p mccs
 
-.PHONY: override_dh_auto_test
 override_dh_auto_test:
 	# Disable tests for now, they are somehow broken
 	# dune runtest -p mccs
-
-.PHONY: override_dh_auto_install
-override_dh_auto_install:
-	dune install --destdir=$(DESTDIR) --prefix=/usr --libdir=..$(OCAML_STDLIB_DIR)

@@ -24,8 +24,10 @@ let ifc c x = if c then x else []
 
 let cxxflags =
   let flags =
+    (if (Sys.win32 && Config.ccomp_type = "msvc")
+     then ["\"/EHsc\""]
+     else ["-Wall -Wextra -Wno-unused-parameter"]) @
     (ifc (Config.system = "macosx") ["-x"; "c++"]) @
-    (ifc (Sys.win32 && Config.ccomp_type = "msvc") ["\"/EHsc\""]) @
     (ifc useGLPK ["-DUSEGLPK"]) @
     (ifc useCOIN ["-DUSECOIN"]) @
     (ifc useCLP  ["-DUSECLP"]) @
@@ -37,6 +39,7 @@ let cxxflags =
 let clibs =
   let flags =
     (ifc (Config.ccomp_type = "cc") ["-lstdc++"]) @
+    (ifc (Config.system = "cygwin") ["-lgcc_s"]) @
     (ifc useCOIN ["-lCoinUtils"]) @
     (ifc useCLP  ["-lOsiClp"]) @
     (ifc useCBC  ["-lOsiCbc";"-lCbc"]) @

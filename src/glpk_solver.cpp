@@ -12,9 +12,9 @@
 #else
 #include <unistd.h>
 #endif
-#include <math.h>
-#include <glpk_solver.h>
-#include <limits.h>
+#include <cmath>
+#include "glpk_solver.h"
+#include <climits>
 
 #define OUTPUT_MODEL 0
 
@@ -67,6 +67,10 @@ void glpk_solver::abort(void) {
   return;
 }
 
+void glpk_solver::set_mip_gap(double mip_gap) {
+  this->mip_gap = mip_gap;
+}
+
 // solve the current lp problem
 int glpk_solver::solve(int timeout) {
   int status = 0, nb_objectives = objectives.size();
@@ -75,7 +79,7 @@ int glpk_solver::solve(int timeout) {
   try {
   if (verbosity == 0) {
     save_stdout = dup(1);
-    close(1);
+    fclose(stdout); /* close(1) does not close stdout on macOS since macOS 12.7.1 / 13.6.3 / 14.2 (the bug has been reported) */
   }
   glp_init_iocp(&this->mip_params);
   this->mip_params.gmi_cuts = GLP_ON;
@@ -85,6 +89,7 @@ int glpk_solver::solve(int timeout) {
   this->mip_params.presolve = GLP_ON;
   this->mip_params.binarize = GLP_ON;
   this->mip_params.tm_lim = timeout;
+  this->mip_params.mip_gap = this->mip_gap;
   this->mip_params.msg_lev = (verbosity > 1) ? GLP_MSG_ON : GLP_MSG_OFF;
   // one of GLP_MSG_OFF GLP_MSG_ERR GLP_MSG_ON GLP_MSG_ALL
 
@@ -129,8 +134,10 @@ int glpk_solver::solve(int timeout) {
     close(save_stdout);
   }
   switch (status) {
+  case GLP_EMIPGAP:
   case 0: {
     switch (glp_mip_status(lp)) {
+    case GLP_FEAS:
     case GLP_OPT: return 1;
     case GLP_NOFEAS: return 0;
     default: return -1;

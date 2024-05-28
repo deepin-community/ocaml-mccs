@@ -12,7 +12,7 @@
 #ifndef _OSI_SOLVER_H
 #define _OSI_SOLVER_H
 
-#include <abstract_solver.h>
+#include "abstract_solver.h"
 #include <coin/OsiSolverInterface.hpp>
 #include <coin/CoinPackedVector.hpp>
 
@@ -21,8 +21,8 @@
 #else
 #include <unistd.h>
 #endif
-#include <math.h>
-#include <limits.h>
+#include <cmath>
+#include <climits>
 
 template<class OsiSolver>
 class osi_solver: public abstract_solver  {
@@ -242,7 +242,7 @@ int osi_solver<OsiSolver>::solve(int timeout) {
   try {
   if (verbosity == 0) {
     save_stdout = dup(1);
-    close(1);
+    fclose(stdout); /* close(1) does not close stdout on macOS since macOS 12.7.1 / 13.6.3 / 14.2 (the bug has been reported) */
   }
 
   double * obj_v = objectives[0].denseVector(nb_vars);

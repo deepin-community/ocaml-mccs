@@ -1,8 +1,25 @@
-ocaml-mccs (1.1+13-1) UNRELEASED; urgency=medium
+ocaml-mccs (1.1+17-1) unstable; urgency=medium
 
-  * update
+  * Team upload
+  * New upstream release
 
- -- Debian OCaml Maintainers <debian-ocaml-maint@lists.debian.org>  Thu, 16 Jun 2022 13:59:06 +0800
+ -- Stéphane Glondu <glondu@debian.org>  Sun, 18 Feb 2024 11:08:57 +0100
+
+ocaml-mccs (1.1+16-1) unstable; urgency=medium
+
+  * Team upload
+  * New upstream release
+  * Include ocamlvars.mk in debian/rules
+  * Bump Standards-Version to 4.6.2
+
+ -- Stéphane Glondu <glondu@debian.org>  Sat, 22 Jul 2023 10:28:39 +0200
+
+ocaml-mccs (1.1+13-2) unstable; urgency=medium
+
+  * Team upload
+  * Use ocaml_dune DH buildsystem
+
+ -- Stéphane Glondu <glondu@debian.org>  Sat, 15 Jul 2023 16:07:13 +0200
 
 ocaml-mccs (1.1+13-1) unstable; urgency=medium
 

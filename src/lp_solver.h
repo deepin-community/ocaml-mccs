@@ -10,8 +10,8 @@
 #ifndef _LP_SOLVER_H
 #define _LP_SOLVER_H
 
-#include <abstract_solver.h>
-#include <scoeff_solver.h>
+#include "abstract_solver.h"
+#include "scoeff_solver.h"
 
 class lp_solver: public abstract_solver, public scoeff_solver<CUDFcoefficient, 0, 0> {
  public:
@@ -19,6 +19,8 @@ class lp_solver: public abstract_solver, public scoeff_solver<CUDFcoefficient, 0
   int init_solver(CUDFVersionedPackageList *all_versioned_packages, int other_vars);
   // Write the lp on a file
   int writelp(const char *filename);
+
+  void set_mip_gap(double);
 
   // Solve the problem
   int solve();

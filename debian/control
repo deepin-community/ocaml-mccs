@@ -5,12 +5,12 @@ Maintainer: Debian OCaml Maintainers <debian-ocaml-maint@lists.debian.org>
 Uploaders: Nicolas Braud-Santoni <nicoo@debian.org>
 Build-Depends:
  debhelper-compat (= 13),
- dh-ocaml,
- ocaml-nox (>= 4.3.0~),
+ dh-ocaml (>= 1.2),
+ ocaml,
  ocaml-dune,
  libcudf-ocaml-dev,
  libglpk-dev
-Standards-Version: 4.6.0
+Standards-Version: 4.6.2
 Rules-Requires-Root: no
 Homepage: https://github.com/AltGr/ocaml-mccs/
 Vcs-Git: https://salsa.debian.org/ocaml-team/ocaml-mccs.git

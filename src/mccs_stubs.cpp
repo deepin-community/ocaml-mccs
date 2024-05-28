@@ -3,6 +3,7 @@
 #endif
 
 #define CAML_NAME_SPACE
+#include <caml/version.h>
 #include <caml/mlvalues.h>
 #include <caml/memory.h>
 #include <caml/custom.h>
@@ -12,15 +13,15 @@
 #include <caml/callback.h>
 #include <signal.h>
 #include <map>
-#include <cudf.h>
-#include <abstract_solver.h>
-#include <cudf_reductions.h>
-#include <mccscudf.h>
+#include "cudf.h"
+#include "abstract_solver.h"
+#include "cudf_reductions.h"
+#include "mccscudf.h"
 #ifdef USEGLPK
-#include <glpk_solver.h>
+#include "glpk_solver.h"
 #endif
 #ifdef USECOIN
-#include <osi_solver.h>
+#include "osi_solver.h"
 #endif
 
 #if OCAML_VERSION < 41200
@@ -499,7 +500,10 @@ static struct custom_operations problem_ops = {
   custom_hash_default,
   custom_serialize_default,
   custom_deserialize_default,
-  custom_compare_ext_default
+  custom_compare_ext_default,
+#if OCAML_VERSION >= 40800
+  0,
+#endif
 };
 
 extern "C" value set_verbosity(value v)
@@ -653,11 +657,11 @@ void restore_sigint_handler() {
 #endif
 
 // Allow C-c to interrupt the solver
-Solver_return call_mccs_protected(Solver solver, char *criteria, int timeout, CUDFproblem* cpb) {
+Solver_return call_mccs_protected(Solver solver, char *criteria, int timeout, double mip_gap, CUDFproblem* cpb) {
   Solver_return ret = { 0, "", cpb, NULL };
   try {
     install_sigint_handler();
-    ret = call_mccs(solver, criteria, timeout, cpb, &mccs_current_solver);
+    ret = call_mccs(solver, criteria, timeout, mip_gap, cpb, &mccs_current_solver);
     mccs_current_solver = NULL;
     restore_sigint_handler();
   } catch (...) {
@@ -668,9 +672,9 @@ Solver_return call_mccs_protected(Solver solver, char *criteria, int timeout, CU
 }
 
 extern "C" value call_solver
-(value ml_solver_backend, value ml_criteria, value ml_timeout, value ml_problem)
+(value ml_solver_backend, value ml_criteria, value ml_timeout, value mip_gap, value ml_problem)
 {
-  CAMLparam3(ml_criteria, ml_timeout, ml_problem);
+  CAMLparam4(ml_criteria, ml_timeout, mip_gap, ml_problem);
   CAMLlocal2(results, pkg);
   problem * pb = Problem_pt(ml_problem);
   CUDFproblem * cpb = pb->pb_cudf_problem;
@@ -685,7 +689,7 @@ extern "C" value call_solver
   strcat(criteria, "]");
 
   // caml_release_runtime_system ();
-  ret = call_mccs_protected(solver, criteria, Int_val(ml_timeout), cpb);
+  ret = call_mccs_protected(solver, criteria, Int_val(ml_timeout), Double_val(mip_gap), cpb);
   // caml_acquire_runtime_system ();
   delete[] criteria;
   switch (ret.success) {
