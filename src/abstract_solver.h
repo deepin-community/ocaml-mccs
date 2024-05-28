@@ -11,8 +11,8 @@
 #ifndef _ABSTRACT_SOLVER_H
 #define _ABSTRACT_SOLVER_H
 
-#include <cudf.h>
-#include <cudf_types.h>
+#include "cudf.h"
+#include "cudf_types.h"
 
 
 // provide an abstraction of the underlying solvers
@@ -91,6 +91,8 @@ class abstract_solver {
   // if unsatisfiable, < 0 on error. -2 means timeout, -3 means sigint)
   virtual int solve() { return 0; }; 
   virtual int solve(int timeout) { return 0; };
+
+  virtual void set_mip_gap(double) = 0;
 
   // ******************************************************************
   // abort should, if possible, do something which causes solve to

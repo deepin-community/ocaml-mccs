@@ -5,15 +5,16 @@
 /*******************************************************/
 
 
-#include <lp_solver.h>
-#include <stdio.h>
-#include <stdlib.h>
+#include <cstdio>
+#include <cstdlib>
 #include <sys/types.h>
 #ifdef _WIN32
 #include <windows.h>
 #else
 #include <unistd.h>
 #endif
+
+#include "lp_solver.h"
 
 #define CLEAN_FILES 1
 #ifdef _WIN32
@@ -75,10 +76,10 @@ int lp_solver::init_solver(CUDFVersionedPackageList *all_versioned_packages, int
   if ((solution == (CUDFcoefficient *)NULL) ||
       (lb == (CUDFcoefficient *)NULL) ||
       (ub == (CUDFcoefficient *)NULL)) {
-    fprintf(stderr, "lp_solver: intialize: not enough memory.\n");
+    fprintf(stderr, "lp_solver: initialize: not enough memory.\n");
     exit(-1);
   } else if (ctlpfile == (FILE *)NULL) {
-    fprintf(stderr, "lp_solver: intialize: can not open %s.\n", ctlpfilename);
+    fprintf(stderr, "lp_solver: initialize: cannot open %s.\n", ctlpfilename);
     exit(-1);
   } else
     return 0;
@@ -87,11 +88,13 @@ int lp_solver::init_solver(CUDFVersionedPackageList *all_versioned_packages, int
 // write the problem into a file
 int lp_solver::writelp(const char *filename) { return 0; }
 
+void lp_solver::set_mip_gap(double mip_gap) {} // TODO ?
+
 // solve the current problem
 int lp_solver::solve() {
   int status = 0;
   int rank, iobjval;
-  char command[1024];
+  char command[2048];
   FILE *fsol = (FILE *)NULL;
   CUDFcoefficient objvals[20];
   unsigned int nb_objectives = objectives.size();

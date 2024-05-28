@@ -10,8 +10,8 @@
 #ifndef _GLPK_SOLVER_H
 #define _GLPK_SOLVER_H
 
-#include <abstract_solver.h>
-#include <scoeff_solver.h>
+#include "abstract_solver.h"
+#include "scoeff_solver.h"
 #include "config.h"
 
 class glpk_solver: public abstract_solver, public scoeff_solver<double, 1, 1>  {
@@ -23,6 +23,8 @@ class glpk_solver: public abstract_solver, public scoeff_solver<double, 1, 1>  {
   bool has_intvars();
   // Allocate some columns for integer variables
   int set_intvar_range(int rank, CUDFcoefficient lower, CUDFcoefficient upper);
+
+  void set_mip_gap(double);
 
   // Write the lp on a file
   // int writelp(const char *filename);
@@ -97,6 +99,7 @@ class glpk_solver: public abstract_solver, public scoeff_solver<double, 1, 1>  {
  private:
   glp_iocp mip_params;
   bool aborted;
+  double mip_gap;
 
 };
 
