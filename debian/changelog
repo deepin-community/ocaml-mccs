@@ -1,3 +1,9 @@
+ocaml-mccs (1.1+17-1deepin0) unstable; urgency=medium
+
+  * No source change upload against GCC 12.
+
+ -- Tianyu Chen <sweetyfish@deepin.org>  Fri, 20 Sep 2024 12:14:36 +0800
+
 ocaml-mccs (1.1+17-1) unstable; urgency=medium
 
   * Team upload
